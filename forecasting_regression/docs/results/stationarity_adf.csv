@@ -1,0 +1,10 @@
+Zone,Series,ADF_Statistic,p_value,Used_Lags,Observations,Stationary_at_5pct
+Zone_1_Power_Consumption,Original,-31.333986972288237,0.0,14,36676,True
+Zone_1_Power_Consumption,First difference,-40.6023966203344,0.0,24,36665,True
+Zone_1_Power_Consumption,Seasonal difference (lag 144),-20.45883801367905,0.0,2,36544,True
+Zone_2_Power_Consumption,Original,-23.986267446346826,0.0,24,36666,True
+Zone_2_Power_Consumption,First difference,-39.19311702577971,0.0,24,36665,True
+Zone_2_Power_Consumption,Seasonal difference (lag 144),-17.155605802501313,6.895922284952448e-30,18,36528,True
+Zone_3_Power_Consumption,Original,-20.64224414163885,0.0,24,36666,True
+Zone_3_Power_Consumption,First difference,-39.01783342240716,0.0,24,36665,True
+Zone_3_Power_Consumption,Seasonal difference (lag 144),-20.016115241651917,0.0,23,36523,True
