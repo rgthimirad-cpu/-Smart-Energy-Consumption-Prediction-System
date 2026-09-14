@@ -190,13 +190,57 @@ def tune_lstm(zone="Zone_1"):
 
     target_column = data["target"]
 
-    results = []
+    results_path = (
+        RESULT_DIR /
+        f"{zone}_lstm_tuning_results.csv"
+    )
 
-    best_model = None
-    best_result = None
-    best_rmse = float("inf")
+    best_model_path = (
+        MODEL_DIR /
+        f"{zone}_best_lstm.keras"
+    )
+
+    # --------------------------------------------------------
+    # Resume previous tuning if results already exist
+    # --------------------------------------------------------
+
+    if results_path.exists():
+
+        existing_df = pd.read_csv(results_path)
+
+        results = existing_df.to_dict("records")
+
+        completed_runs = set(
+            existing_df["Run"].tolist()
+        )
+
+        best_rmse = float(
+            existing_df["RMSE"].min()
+        )
+
+        print("\nExisting tuning results found.")
+        print("Completed runs:", completed_runs)
+
+    else:
+
+        results = []
+        completed_runs = set()
+        best_rmse = float("inf")
+
+    # --------------------------------------------------------
+    # Run unfinished experiments
+    # --------------------------------------------------------
 
     for config in TUNING_CONFIGS:
+
+        if config["name"] in completed_runs:
+
+            print(
+                f"\nSkipping {config['name']} "
+                "(already completed)"
+            )
+
+            continue
 
         model, result = run_experiment(
             config,
@@ -209,39 +253,48 @@ def tune_lstm(zone="Zone_1"):
 
         results.append(result)
 
-        # Select best model using validation RMSE.
-        if result["RMSE"] < best_rmse:
-            best_rmse = result["RMSE"]
-            best_model = model
-            best_result = result
+        # Save results immediately after every experiment.
+        results_df = pd.DataFrame(results)
 
-    # Save all tuning results.
+        results_df.to_csv(
+            results_path,
+            index=False
+        )
+
+        print(
+            f"\nCheckpoint saved after "
+            f"{config['name']}"
+        )
+
+        # Save best model immediately.
+        if result["RMSE"] < best_rmse:
+
+            best_rmse = result["RMSE"]
+
+            model.save(
+                best_model_path
+            )
+
+            print(
+                "New best model saved."
+            )
+
+    # --------------------------------------------------------
+    # Final summary
+    # --------------------------------------------------------
+
     results_df = pd.DataFrame(results)
 
-    results_path = (
-        RESULT_DIR /
-        f"{zone}_lstm_tuning_results.csv"
-    )
-
-    results_df.to_csv(
-        results_path,
-        index=False
-    )
-
-    # Save the best tuned model.
-    best_model_path = (
-        MODEL_DIR /
-        f"{zone}_best_lstm.keras"
-    )
-
-    best_model.save(best_model_path)
+    best_row = results_df.loc[
+        results_df["RMSE"].idxmin()
+    ]
 
     print("\n" + "=" * 60)
     print("TUNING COMPLETE")
     print("=" * 60)
 
     print("\nBest configuration:")
-    print(best_result)
+    print(best_row.to_dict())
 
     print("\nTuning results saved to:")
     print(results_path)
