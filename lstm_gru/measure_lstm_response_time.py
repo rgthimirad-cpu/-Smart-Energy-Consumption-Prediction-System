@@ -1,6 +1,6 @@
 from pathlib import Path
 import time
-
+import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -99,5 +99,35 @@ def measure_response_time(
     print(f"Maximum: {max_ms:.4f} ms")
 
 
+        # --------------------------------------------------------
+    # Save response-time results
+    # --------------------------------------------------------
+
+    result = {
+        "Zone": zone,
+        "Average_Response_Time_ms": average_ms,
+        "Median_Response_Time_ms": median_ms,
+        "Minimum_Response_Time_ms": min_ms,
+        "Maximum_Response_Time_ms": max_ms,
+        "Samples_Measured": measurement_runs
+    }
+
+    result_df = pd.DataFrame([result])
+
+    result_path = (
+        ROOT
+        / "lstm_gru"
+        / "results"
+        / f"{zone}_lstm_response_time.csv"
+    )
+
+    result_df.to_csv(
+        result_path,
+        index=False
+    )
+
+    print("\nResponse-time results saved to:")
+    print(result_path)
+    
 if __name__ == "__main__":
     measure_response_time("Zone_1")
