@@ -5,12 +5,12 @@ from tensorflow.keras.optimizers import Adam
 
 def build_lstm_model(
     input_shape,
-    units=64,
+    units=(64,),
     dropout=0.2,
     learning_rate=0.001
 ):
     """
-    Build the baseline LSTM forecasting model.
+    Build an LSTM forecasting model.
 
     Parameters
     ----------
@@ -18,11 +18,16 @@ def build_lstm_model(
         Shape of one input sequence:
         (timesteps, features)
 
-    units : int
-        Number of LSTM units.
+    units : tuple, list or int
+        Number of units in each LSTM layer.
+
+        Examples:
+        64          -> one LSTM layer with 64 units
+        (64,)       -> one LSTM layer with 64 units
+        (64, 32)    -> two LSTM layers with 64 and 32 units
 
     dropout : float
-        Dropout rate used for regularization.
+        Dropout rate used after each LSTM layer.
 
     learning_rate : float
         Adam optimizer learning rate.
@@ -33,15 +38,38 @@ def build_lstm_model(
         Compiled LSTM model.
     """
 
-    model = Sequential([
-        Input(shape=input_shape),
+    # Allow a single integer for backward compatibility.
+    if isinstance(units, int):
+        units = (units,)
 
-        LSTM(units),
+    model = Sequential()
 
-        Dropout(dropout),
+    model.add(
+        Input(shape=input_shape)
+    )
 
+    # Add one or more LSTM layers.
+    for index, layer_units in enumerate(units):
+
+        # Every LSTM except the final one must return
+        # the full sequence to the next LSTM layer.
+        return_sequences = index < len(units) - 1
+
+        model.add(
+            LSTM(
+                layer_units,
+                return_sequences=return_sequences
+            )
+        )
+
+        model.add(
+            Dropout(dropout)
+        )
+
+    # One output because HORIZON = 1.
+    model.add(
         Dense(1)
-    ])
+    )
 
     model.compile(
         optimizer=Adam(
@@ -55,11 +83,12 @@ def build_lstm_model(
 
 if __name__ == "__main__":
 
-    # Shared data configuration:
-    # 144 previous time steps
-    # 27 input features
+    # Example baseline model
     model = build_lstm_model(
-        input_shape=(144, 27)
+        input_shape=(144, 27),
+        units=(64,),
+        dropout=0.2,
+        learning_rate=0.001
     )
 
     model.summary()
