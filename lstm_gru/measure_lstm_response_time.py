@@ -10,12 +10,7 @@ from lstm_gru.data_harness import prepare_zone_data
 
 ROOT = Path(__file__).resolve().parents[1]
 
-MODEL_PATH = (
-    ROOT
-    / "lstm_gru"
-    / "models"
-    / "Zone_1_best_lstm.keras"
-)
+
 
 
 def measure_response_time(
@@ -37,7 +32,13 @@ def measure_response_time(
 
     print("Loading best LSTM model...")
 
-    model = load_model(MODEL_PATH)
+    model_path = (
+    ROOT
+    / "lstm_gru"
+    / "models"
+    / f"{zone}_best_lstm.keras"
+)
+    model = load_model(model_path)
 
     # --------------------------------------------------------
     # Warm-up
