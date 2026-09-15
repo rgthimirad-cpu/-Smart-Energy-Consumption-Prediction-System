@@ -288,3 +288,35 @@ def run_zone(zone, architectures, max_epochs):
     keras.backend.clear_session()
 
     return result_row, predictions_df
+
+
+def main():
+    ensure_output_dirs()
+
+    zones = list(ZONES.keys())
+    architectures = GRU_ARCHITECTURES
+    max_epochs = MAX_EPOCHS
+
+    all_results = []
+    all_predictions = []
+
+    for zone in zones:
+        result_row, predictions_df = run_zone(zone, architectures, max_epochs)
+        all_results.append(result_row)
+        all_predictions.append(predictions_df)
+
+    results_df = pd.DataFrame(all_results)
+    results_path = RESULTS_DIR / "results_gru.csv"
+    results_df.to_csv(results_path, index=False)
+    print(f"\nSaved final results: {results_path}")
+
+    predictions_df_all = pd.concat(all_predictions, ignore_index=True)
+    predictions_path = PREDICTIONS_DIR / "predictions_gru.csv"
+    predictions_df_all.to_csv(predictions_path, index=False)
+    print(f"Saved predictions: {predictions_path}")
+
+    return results_df
+
+
+if __name__ == "__main__":
+    main()
