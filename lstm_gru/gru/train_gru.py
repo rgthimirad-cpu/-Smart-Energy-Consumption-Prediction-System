@@ -158,3 +158,31 @@ def select_best_architecture(results_df):
     ]
     best_row = eligible.sort_values("RMSE").iloc[0]
     return best_row
+
+
+def refit_on_train_and_validation(data, architecture, best_epoch):
+    """
+    Retrain the selected architecture on train + validation combined,
+    for the epoch count found during architecture search. No
+    validation split is held out here, so there is no early stopping
+    - the epoch count itself is the tuned hyperparameter carried over.
+    """
+
+    train_df, validation_df, _ = load_datasets()
+    combined_df = pd.concat([train_df, validation_df], ignore_index=True)
+
+    X_combined, y_combined = create_sequences(
+        combined_df, data["features"], data["target"], LOOKBACK, HORIZON
+    )
+
+    set_seeds()
+    model = build_gru_model(architecture, X_combined.shape[1:])
+    model.fit(
+        X_combined,
+        y_combined,
+        epochs=best_epoch,
+        batch_size=BATCH_SIZE,
+        verbose=2
+    )
+
+    return model
