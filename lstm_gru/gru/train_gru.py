@@ -227,3 +227,64 @@ def evaluate_on_test(model, data, architecture_name):
     }
 
     return result_row, test_true, test_pred
+
+
+def run_zone(zone, architectures, max_epochs):
+    print(f"\n{'=' * 60}\nZone: {zone}\n{'=' * 60}")
+
+    data = prepare_zone_data(zone)
+
+    search_results, best_epochs = search_architectures(
+        zone, data, architectures, max_epochs
+    )
+
+    tuning_path = TUNING_DIR / f"gru_validation_{zone.lower()}.csv"
+    search_results.to_csv(tuning_path, index=False)
+    print(f"Saved tuning log: {tuning_path}")
+
+    best_row = select_best_architecture(search_results)
+    best_name = best_row["Model"]
+    best_epoch = int(best_row["Best_Epoch"])
+    best_architecture = next(
+        a for a in architectures if a["name"] == best_name)
+
+    print(
+        f"\nSelected architecture for {zone}: {best_name} "
+        f"(validation RMSE={best_row['RMSE']:.2f}, "
+        f"latency={best_row['Single_Sample_Latency_ms']:.3f} ms)"
+    )
+
+    final_model = refit_on_train_and_validation(
+        data, best_architecture, best_epoch)
+
+    result_row, test_true, test_pred = evaluate_on_test(
+        final_model, data, best_name)
+
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+    model_path = MODELS_DIR / f"{zone.lower()}_gru.h5"
+    final_model.save(model_path)
+    print(f"Saved model: {model_path}")
+
+    # Attach the actual timestamp each test-set prediction belongs to
+    _, _, test_df = load_datasets()
+    test_datetime = test_df["DateTime"].to_numpy()
+
+    assert len(test_datetime) == len(test_true), (
+        f"DateTime/prediction length mismatch for {zone}: "
+        f"{len(test_datetime)} timestamps vs {len(test_true)} predictions. "
+        "The row-order assumption behind this alignment no longer holds."
+    )
+
+    predictions_df = pd.DataFrame(
+        {
+            "DateTime": test_datetime,
+            "Row_Index": np.arange(len(test_true)),
+            "Zone": zone,
+            "Actual": test_true,
+            "Predicted": test_pred
+        }
+    )
+
+    keras.backend.clear_session()
+
+    return result_row, predictions_df
