@@ -66,3 +66,42 @@ Run all cells top to bottom. The notebook resolves paths relative to its own loc
 
 See the table at the end of `docs/feature_dictionary.md` — in short: modeling teams (Forecasting/Regression/LSTM-GRU) use `train.csv`/`validation.csv`/`test.csv`; Anomaly Detection and Dashboard teams use the unscaled `cleaned_energy_data.csv` or `feature_engineered_energy_data.csv`; Clustering uses `feature_engineered_energy_data.csv`.
 
+## Peak-Demand Prediction
+
+The Peak-Demand Prediction component predicts whether the total energy demand in the next 10-minute interval will reach a peak level.
+
+### Approach
+
+- Total demand is calculated by combining power consumption from Zone 1, Zone 2, and Zone 3.
+- Peak demand is defined using the 90th percentile of total demand.
+- A future peak-demand target is created by shifting the peak label by one 10-minute interval.
+- Weather, time-based, lag, rolling-statistical, and seasonal features are used for prediction.
+- The data is split chronologically into training, validation, and test sets to preserve the time-series nature of the dataset.
+- StandardScaler is applied to the modeling features.
+
+### Models Evaluated
+
+The following classification models were evaluated:
+
+1. Logistic Regression
+2. Random Forest
+3. Balanced Logistic Regression
+
+Logistic Regression achieved the best overall validation performance.
+
+| Metric | Validation Result |
+|---|---:|
+| Accuracy | 97.97% |
+| Precision | 58.94% |
+| Recall | 91.36% |
+| F1 Score | 71.66% |
+| ROC-AUC | 99.34% |
+| PR-AUC | 83.85% |
+
+### Key Findings
+
+Recent energy consumption features, particularly lag and rolling features, were among the most influential predictors of future peak demand.
+
+### Limitation
+
+The dataset covers one year and contains strong seasonal variations in energy consumption. As a result, the chronological test period contains very few peak-demand observations. Therefore, test-set accuracy alone should not be used as the main measure of peak-event detection performance. Validation precision, recall, F1-score, ROC-AUC, and PR-AUC are considered alongside the test results.
