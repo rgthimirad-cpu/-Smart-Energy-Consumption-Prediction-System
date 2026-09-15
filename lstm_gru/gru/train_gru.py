@@ -186,3 +186,44 @@ def refit_on_train_and_validation(data, architecture, best_epoch):
     )
 
     return model
+
+
+def evaluate_on_test(model, data, architecture_name):
+    """
+    Final, one-time evaluation on the held-out test split: accuracy
+    metrics in original Watts, plus response-time metrics for
+    inference over the entire test set.
+    """
+
+    target_column = data["target"]
+
+    timing = measure_full_set_inference(
+        model, data["X_test"], batch_size=BATCH_SIZE)
+    test_pred = inverse_transform_target(timing["predictions"], target_column)
+    test_true = inverse_transform_target(data["y_test"], target_column)
+
+    metrics = calculate_metrics(test_true, test_pred)
+    single_latency_ms = measure_single_sample_latency(
+        model, data["X_test"], repeats=TIMING_REPEATS
+    )
+
+    result_row = {
+        "Model": "GRU",
+        "Zone": target_column,
+        "RMSE": metrics["RMSE"],
+        "MAE": metrics["MAE"],
+        "MAPE": metrics["MAPE"],
+        "R2": metrics["R2"],
+        "Test_Set_Total_Inference_Time_Sec": timing["total_seconds"],
+        "Avg_Inference_Time_Per_Sample_ms": timing["avg_ms_per_sample"],
+        "Throughput_Samples_Per_Sec": timing["throughput_samples_per_sec"],
+        "Single_Sample_Latency_ms": single_latency_ms,
+        "Test_Set_Size": len(test_true),
+        "Notes": (
+            f"best architecture={architecture_name}; "
+            "predictions inverse-transformed to Watts; "
+            "refit on train+validation before test evaluation"
+        )
+    }
+
+    return result_row, test_true, test_pred
