@@ -261,7 +261,7 @@ def run_zone(zone, architectures, max_epochs):
         final_model, data, best_name)
 
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    model_path = MODELS_DIR / f"{zone.lower()}_gru.h5"
+    model_path = MODELS_DIR / f"{zone.lower()}_gru.keras"
     final_model.save(model_path)
     print(f"Saved model: {model_path}")
 
