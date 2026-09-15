@@ -1,0 +1,7 @@
+Model,Zone,RMSE,MAE,MAPE,Notes
+ARIMA,Zone_1_Power_Consumption,381.0956263078456,255.8607422523048,0.8994047215028598,"order=(2, 0, 0); validation-selected; rolling one-step evaluation; 10-minute data"
+SARIMA,Zone_1_Power_Consumption,342.5865973566336,227.6965560388496,0.8029018892659038,"order=(1, 0, 1), seasonal_order=(0, 1, 0, 144); validation-selected; rolling one-step evaluation; 10-minute data"
+ARIMA,Zone_2_Power_Consumption,341.1388994656541,215.2294324159604,0.9365210674720011,"order=(2, 0, 0); validation-selected; rolling one-step evaluation; 10-minute data"
+SARIMA,Zone_2_Power_Consumption,321.0368021773276,198.19937056599423,0.8656411439020226,"order=(1, 0, 0), seasonal_order=(0, 1, 0, 144); validation-selected; rolling one-step evaluation; 10-minute data"
+ARIMA,Zone_3_Power_Consumption,289.4929056982435,165.62146031830497,1.4665693663522872,"order=(2, 0, 0); validation-selected; rolling one-step evaluation; 10-minute data"
+SARIMA,Zone_3_Power_Consumption,295.9274408008302,160.5003835657535,1.4135421151851422,"order=(1, 0, 1), seasonal_order=(0, 1, 0, 144); validation-selected; rolling one-step evaluation; 10-minute data"

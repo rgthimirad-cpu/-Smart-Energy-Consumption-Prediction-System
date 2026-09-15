@@ -1,0 +1,10 @@
+Model,Zone,Precision,Recall,F1,Injected_Anomalies,Flagged,Notes
+Isolation Forest,Zone_1,0.032679738562091505,0.16025641025641027,0.05428881650380022,156,765,Same production feature space; contamination=0.02; fit on clean train only; synthetic anomaly rate=0.02
+Statistical Threshold,Zone_1,0.4895833333333333,0.9038461538461539,0.6351351351351351,156,288,|z| > 4.0; rolling 1h/24h mean/std; synthetic anomaly rate=0.02
+Robust MAD Z-score,Zone_1,1.0,0.5961538461538461,0.7469879518072289,156,93,|MAD z| > 3.0; trailing rolling MAD; synthetic anomaly rate=0.02
+Isolation Forest,Zone_2,0.024136650575566285,0.4166666666666667,0.04563004563004563,156,2693,Same production feature space; contamination=0.05; fit on clean train only; synthetic anomaly rate=0.02
+Statistical Threshold,Zone_2,0.4778156996587031,0.8974358974358975,0.623608017817372,156,293,|z| > 4.0; rolling 1h/24h mean/std; synthetic anomaly rate=0.02
+Robust MAD Z-score,Zone_2,1.0,0.4551282051282051,0.6255506607929515,156,71,|MAD z| > 3.0; trailing rolling MAD; synthetic anomaly rate=0.02
+Isolation Forest,Zone_3,0.02644466209598433,0.5192307692307693,0.05032618825722274,156,3063,Same production feature space; contamination=0.05; fit on clean train only; synthetic anomaly rate=0.02
+Statistical Threshold,Zone_3,0.43573667711598746,0.8910256410256411,0.5852631578947368,156,319,|z| > 4.0; rolling 1h/24h mean/std; synthetic anomaly rate=0.02
+Robust MAD Z-score,Zone_3,0.44166666666666665,0.6794871794871795,0.5353535353535354,156,240,|MAD z| > 5.0; trailing rolling MAD; synthetic anomaly rate=0.02

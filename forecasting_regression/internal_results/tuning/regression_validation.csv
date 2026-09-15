@@ -1,0 +1,16 @@
+Model,Zone,RMSE,MAE,MAPE,Parameters
+Linear Regression,Zone_1_Power_Consumption,381.4296241774932,266.74358683612286,0.8277092734214597,{}
+Random Forest,Zone_1_Power_Consumption,400.436568088981,276.6404871516143,0.8705745244389936,"{""max_depth"": 10, ""max_features"": 0.6, ""max_samples"": 0.5, ""min_samples_leaf"": 1, ""n_estimators"": 20}"
+Random Forest,Zone_1_Power_Consumption,387.90259660415694,269.6837907621484,0.8587962904433989,"{""max_depth"": 14, ""max_features"": 0.7, ""max_samples"": 0.6, ""min_samples_leaf"": 1, ""n_estimators"": 40}"
+XGBoost,Zone_1_Power_Consumption,379.8704598111123,263.72729677822923,0.8332182849284846,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.05, ""max_depth"": 5, ""n_estimators"": 150, ""subsample"": 0.9}"
+XGBoost,Zone_1_Power_Consumption,375.97316102879074,264.0107002279155,0.8387387561915828,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.03, ""max_depth"": 6, ""n_estimators"": 300, ""subsample"": 0.9}"
+Linear Regression,Zone_2_Power_Consumption,264.54728334752525,178.97384472723374,0.8470990001215869,{}
+Random Forest,Zone_2_Power_Consumption,309.73021911196713,209.67179674086603,0.9851578052847529,"{""max_depth"": 10, ""max_features"": 0.6, ""max_samples"": 0.5, ""min_samples_leaf"": 1, ""n_estimators"": 20}"
+Random Forest,Zone_2_Power_Consumption,298.1817621067991,203.32834469049493,0.9579107171496333,"{""max_depth"": 14, ""max_features"": 0.7, ""max_samples"": 0.6, ""min_samples_leaf"": 1, ""n_estimators"": 40}"
+XGBoost,Zone_2_Power_Consumption,286.1941939326321,192.57050091676766,0.9045519254702922,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.05, ""max_depth"": 5, ""n_estimators"": 150, ""subsample"": 0.9}"
+XGBoost,Zone_2_Power_Consumption,300.0781239956747,202.67646779005486,0.940125893897501,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.03, ""max_depth"": 6, ""n_estimators"": 300, ""subsample"": 0.9}"
+Linear Regression,Zone_3_Power_Consumption,241.780760658928,156.46277554275852,1.1948443617264022,{}
+Random Forest,Zone_3_Power_Consumption,415.4481254695923,275.85233295903157,2.307467893092754,"{""max_depth"": 10, ""max_features"": 0.6, ""max_samples"": 0.5, ""min_samples_leaf"": 1, ""n_estimators"": 20}"
+Random Forest,Zone_3_Power_Consumption,401.9988380090947,267.77184603932056,2.20821746918072,"{""max_depth"": 14, ""max_features"": 0.7, ""max_samples"": 0.6, ""min_samples_leaf"": 1, ""n_estimators"": 40}"
+XGBoost,Zone_3_Power_Consumption,431.3238359253,299.3649209043088,2.527443358691904,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.05, ""max_depth"": 5, ""n_estimators"": 150, ""subsample"": 0.9}"
+XGBoost,Zone_3_Power_Consumption,437.25849020885073,299.7332184593481,2.5636741183782727,"{""colsample_bytree"": 0.9, ""learning_rate"": 0.03, ""max_depth"": 6, ""n_estimators"": 300, ""subsample"": 0.9}"
