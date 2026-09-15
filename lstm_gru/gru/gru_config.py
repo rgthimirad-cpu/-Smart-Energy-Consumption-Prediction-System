@@ -19,39 +19,39 @@ GRU_ARCHITECTURES = [
     {
         "name": "gru_small",
         "layers": [
-            {"units": 64, "return_sequences": False},
+            {"units": 64, "return_sequences": False}
         ],
         "dropout": 0.0,
         "dense_units": None,
-        "learning_rate": 1e-3,
+        "learning_rate": 1e-3
     },
     {
         "name": "gru_medium",
         "layers": [
-            {"units": 128, "return_sequences": False},
+            {"units": 128, "return_sequences": False}
         ],
         "dropout": 0.2,
         "dense_units": 32,
-        "learning_rate": 1e-3,
+        "learning_rate": 1e-3
     },
     {
         "name": "gru_stacked_small",
         "layers": [
             {"units": 64, "return_sequences": True},
-            {"units": 32, "return_sequences": False},
+            {"units": 32, "return_sequences": False}
         ],
         "dropout": 0.1,
         "dense_units": None,
-        "learning_rate": 1e-3,
+        "learning_rate": 1e-3
     },
     {
         "name": "gru_stacked_large",
         "layers": [
             {"units": 128, "return_sequences": True},
-            {"units": 64, "return_sequences": False},
+            {"units": 64, "return_sequences": False}
         ],
         "dropout": 0.2,
         "dense_units": 32,
-        "learning_rate": 5e-4,
-    },
+        "learning_rate": 5e-4
+    }
 ]
