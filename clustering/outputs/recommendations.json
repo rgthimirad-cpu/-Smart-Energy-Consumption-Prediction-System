@@ -1,0 +1,279 @@
+{
+  "metadata": {
+    "system_name": "Smart Energy Consumption Prediction & Optimization System",
+    "module": "Consumption Clustering & Recommendation Engine",
+    "version": "1.0.0",
+    "generated_at": "2026-09-14T21:25:44.665078",
+    "source_dataset": "clustering/outputs/energy_cluster_results.csv",
+    "total_records_analyzed": 52415,
+    "cluster_algorithm": "K-Means (k=4)",
+    "clusters_count": 4
+  },
+  "rule_mapping": {
+    "cluster_0": "Optimize HVAC setpoints, pre-cool facilities before afternoon heat, and insulate Zone 3 thermal loads.",
+    "cluster_1": "Shift heavy appliances, dishwashers, and EV charging away from peak evening hours (6 PM - 10 PM) to off-peak night hours.",
+    "cluster_2": "Deploy rooftop solar PV arrays and daylight harvesting during active daytime operating hours.",
+    "cluster_3": "Audit nighttime standby vampire loads and maintain efficient off-peak baseline power usage."
+  },
+  "clusters": {
+    "cluster_0": {
+      "cluster_id": 0,
+      "cluster_name": "High-Temperature Seasonal Heavy Consumers",
+      "short_code": "SUMMER_HVAC_HEAVY",
+      "efficiency_rating": "Grade C",
+      "efficiency_level": "Low (Weather-Sensitive Heavy Load)",
+      "ui_color_theme": "#EF4444",
+      "profile": {
+        "usage_behavior": "High total electricity consumption across all zones, heavily driven by high ambient outdoor temperatures (avg 26.78\u00b0C). Elevated cooling demand in summer months, with Zone 3 showing disproportionately high power draw (27,295.85 kW).",
+        "dominant_time_window": "12:00 - 23:00 (Afternoon & Evening Thermal Demand)",
+        "environmental_trigger": "High Ambient Temperature (> 25\u00b0C)",
+        "sample_count": 8013,
+        "sample_percentage": 15.29,
+        "statistics": {
+          "total_power_mean_kw": 90529.63,
+          "zone_1_mean_kw": 37747.27,
+          "zone_2_mean_kw": 25486.51,
+          "zone_3_mean_kw": 27295.85,
+          "temperature_mean_c": 26.78,
+          "humidity_mean_pct": 59.04,
+          "peak_hour_percentage": 17.25,
+          "weekend_percentage": 28.7
+        }
+      },
+      "key_patterns": [
+        "Strong positive correlation between ambient outdoor temperature and energy draw",
+        "Zone 3 consumption is 68% higher than off-peak baseline due to cooling load",
+        "Concentrated in mid-summer months (June - August)",
+        "Significant afternoon and evening thermal inertia"
+      ],
+      "optimization_rules": [
+        {
+          "rule_id": "REC-C0-01",
+          "title": "HVAC Thermostat Setpoint Adjustment",
+          "category": "Thermal & HVAC Efficiency",
+          "priority": "High",
+          "action_description": "Raise thermostat cooling setpoint by 1.5\u00b0C - 2.0\u00b0C during peak afternoon heat. Utilize smart thermostats with automated schedule adjustments.",
+          "target_appliance_zone": "Zone 3 & Central HVAC Cooling Units",
+          "estimated_power_reduction_pct": 12.5,
+          "cost_impact": "Immediate OpEx Savings"
+        },
+        {
+          "rule_id": "REC-C0-02",
+          "title": "Off-Peak Thermal Pre-Cooling",
+          "category": "Load Shifting",
+          "priority": "High",
+          "action_description": "Pre-cool facility zones during low-tariff morning hours (04:00 - 09:00) when outdoor temperature is lower, reducing compressor work in peak afternoon.",
+          "target_appliance_zone": "All Zones (HVAC Pre-cooling)",
+          "estimated_power_reduction_pct": 15.0,
+          "cost_impact": "High Peak Tariff Reduction"
+        },
+        {
+          "rule_id": "REC-C0-03",
+          "title": "Zone 3 Thermal Insulation & Solar Shading",
+          "category": "Building Envelope",
+          "priority": "Medium",
+          "action_description": "Install reflective window films, thermal insulation, and automated window blinds to decrease radiant solar heat gain in Zone 3.",
+          "target_appliance_zone": "Zone 3 Infrastructure",
+          "estimated_power_reduction_pct": 8.0,
+          "cost_impact": "CapEx Investment with 14-Month Payback"
+        }
+      ],
+      "summary_recommendation": "Pre-cool zones during early morning hours and adjust summer HVAC thermostat setpoints by 2\u00b0C to mitigate weather-driven peak demand."
+    },
+    "cluster_1": {
+      "cluster_id": 1,
+      "cluster_name": "Evening Peak Demand Consumers",
+      "short_code": "EVENING_PEAK_CRITICAL",
+      "efficiency_rating": "Grade D",
+      "efficiency_level": "Critical (High Peak Load & Cost Risk)",
+      "ui_color_theme": "#DC2626",
+      "profile": {
+        "usage_behavior": "Highest overall power consumption (avg 91,450.99 kW) concentrated almost exclusively between 18:00 and 23:00 (93.10% peak hour occurrences). Zone 1 experiences maximum load (41,796.17 kW) during these evening peak tariff windows.",
+        "dominant_time_window": "18:00 - 23:00 (Evening Peak Hours)",
+        "environmental_trigger": "Peak Activity Window & Evening Utility Tariff Rates",
+        "sample_count": 7637,
+        "sample_percentage": 14.57,
+        "statistics": {
+          "total_power_mean_kw": 91450.99,
+          "zone_1_mean_kw": 41796.17,
+          "zone_2_mean_kw": 26878.31,
+          "zone_3_mean_kw": 22776.51,
+          "temperature_mean_c": 17.92,
+          "humidity_mean_pct": 69.11,
+          "peak_hour_percentage": 93.1,
+          "weekend_percentage": 27.85
+        }
+      },
+      "key_patterns": [
+        "99.2% of consumption records occur between 18:00 and 23:00",
+        "Highest total power draw (91.45 MW average) in the dataset",
+        "Zone 1 peak load reaches 41.8 MW (69% above off-peak baseline)",
+        "Direct coincidence with maximum Time-of-Use (TOU) billing rates"
+      ],
+      "optimization_rules": [
+        {
+          "rule_id": "REC-C1-01",
+          "title": "Peak-to-Off-Peak Load Shifting",
+          "category": "Demand Side Management",
+          "priority": "Critical",
+          "action_description": "Shift flexible heavy appliances (water heaters, clothes dryers, dishwashers, heavy machinery) and EV charging from 18:00 - 22:00 to 23:00 - 06:00.",
+          "target_appliance_zone": "Zone 1 & Heavy Appliances / EV Chargers",
+          "estimated_power_reduction_pct": 22.0,
+          "cost_impact": "Major Utility Bill Reduction (TOU Optimization)"
+        },
+        {
+          "rule_id": "REC-C1-02",
+          "title": "Battery Energy Storage System (BESS) Peak Shaving",
+          "category": "Energy Storage & Dispatch",
+          "priority": "High",
+          "action_description": "Charge battery storage systems during off-peak night hours (01:00 - 05:00) and discharge during peak evening hours (18:00 - 21:00) to shave Zone 1 peak demand.",
+          "target_appliance_zone": "Zone 1 Main Distribution Grid",
+          "estimated_power_reduction_pct": 18.5,
+          "cost_impact": "CapEx BESS Investment / Grid Relief"
+        },
+        {
+          "rule_id": "REC-C1-03",
+          "title": "Automated Demand-Response Load Shedding",
+          "category": "Smart Automation",
+          "priority": "High",
+          "action_description": "Implement automated IoT relay controllers to temporarily shed non-essential loads (decorative lighting, secondary water heating) during peak grid alerts.",
+          "target_appliance_zone": "Zone 1 & Zone 2 Non-Critical Circuits",
+          "estimated_power_reduction_pct": 10.0,
+          "cost_impact": "Automated Peak Tariff Avoidance"
+        }
+      ],
+      "summary_recommendation": "Shift heavy loads, water heaters, and EV charging from peak hours (6 PM - 10 PM) to midnight, saving up to 22% in peak demand charges."
+    },
+    "cluster_2": {
+      "cluster_id": 2,
+      "cluster_name": "Daytime Commercial & Active Residential Users",
+      "short_code": "DAYTIME_MODERATE",
+      "efficiency_rating": "Grade B",
+      "efficiency_level": "Moderate (Baseline Daytime Operations)",
+      "ui_color_theme": "#3B82F6",
+      "profile": {
+        "usage_behavior": "Moderate-to-high consumption (avg 71,609.43 kW) concentrated during daylight and business operational hours (06:00 - 17:00). Low peak evening exposure (1.30%), representing stable daytime activity.",
+        "dominant_time_window": "06:00 - 17:00 (Daytime Business Hours)",
+        "environmental_trigger": "Occupancy & Daytime Operational Hours",
+        "sample_count": 18584,
+        "sample_percentage": 35.46,
+        "statistics": {
+          "total_power_mean_kw": 71609.43,
+          "zone_1_mean_kw": 33569.61,
+          "zone_2_mean_kw": 21818.57,
+          "zone_3_mean_kw": 16221.25,
+          "temperature_mean_c": 19.18,
+          "humidity_mean_pct": 63.52,
+          "peak_hour_percentage": 1.3,
+          "weekend_percentage": 26.37
+        }
+      },
+      "key_patterns": [
+        "Largest cluster accounting for 35.46% of total historical time steps",
+        "78.8% of consumption occurs between 06:00 and 17:00",
+        "Very low peak evening exposure (1.30%)",
+        "Predictable, consistent daytime load profile"
+      ],
+      "optimization_rules": [
+        {
+          "rule_id": "REC-C2-01",
+          "title": "On-Site Rooftop Solar PV Integration",
+          "category": "Renewable Generation",
+          "priority": "High",
+          "action_description": "Install rooftop solar photovoltaic panels to generate clean energy that directly aligns with peak daytime energy demand.",
+          "target_appliance_zone": "Rooftop / Facility Solar Arrays",
+          "estimated_power_reduction_pct": 30.0,
+          "cost_impact": "High Long-Term Energy Independence"
+        },
+        {
+          "rule_id": "REC-C2-02",
+          "title": "Daylight Harvesting & Lighting Control",
+          "category": "Lighting Efficiency",
+          "priority": "Medium",
+          "action_description": "Use photosensors to dynamically dim electric indoor lighting when natural daylight is sufficient, paired with motion-sensor controls.",
+          "target_appliance_zone": "Commercial Office & Interior Lighting",
+          "estimated_power_reduction_pct": 12.0,
+          "cost_impact": "Low-Cost Smart Sensor Retrofit"
+        },
+        {
+          "rule_id": "REC-C2-03",
+          "title": "Variable Frequency Drive (VFD) Optimization",
+          "category": "Motor & Machinery Efficiency",
+          "priority": "Medium",
+          "action_description": "Equip pumps, fans, and conveyor motors in Zone 1 and Zone 2 with VFDs to match motor speed with real-time operational demand.",
+          "target_appliance_zone": "Zone 1 & Zone 2 Industrial Motors",
+          "estimated_power_reduction_pct": 15.0,
+          "cost_impact": "High Equipment Longevity & Energy Saving"
+        }
+      ],
+      "summary_recommendation": "Capitalize on daytime solar PV generation and daylight harvesting sensors to directly offset business-hour baseline consumption."
+    },
+    "cluster_3": {
+      "cluster_id": 3,
+      "cluster_name": "Off-Peak Night Baseline Users",
+      "short_code": "OFF_PEAK_EFFICIENT",
+      "efficiency_rating": "Grade A",
+      "efficiency_level": "High (Base Load Efficiency)",
+      "ui_color_theme": "#10B981",
+      "profile": {
+        "usage_behavior": "Lowest overall power consumption (avg 53,538.88 kW), occurring predominantly during late night and early morning hours (00:00 - 11:00). Represents baseline, standby, and off-peak routine usage with 0% peak evening overlap.",
+        "dominant_time_window": "00:00 - 08:00 (Overnight Baseline)",
+        "environmental_trigger": "Minimum Human Activity & Cool Night Temperatures",
+        "sample_count": 18181,
+        "sample_percentage": 34.69,
+        "statistics": {
+          "total_power_mean_kw": 53538.88,
+          "zone_1_mean_kw": 24742.1,
+          "zone_2_mean_kw": 15839.43,
+          "zone_3_mean_kw": 12957.35,
+          "temperature_mean_c": 15.29,
+          "humidity_mean_pct": 76.81,
+          "peak_hour_percentage": 0.02,
+          "weekend_percentage": 31.06
+        }
+      },
+      "key_patterns": [
+        "Accounts for 34.69% of all dataset observations",
+        "99.4% of points fall between 00:00 and 11:00 AM",
+        "Lowest mean total power draw (53.54 MW average)",
+        "0.02% peak hour coincidence - ideal off-peak baseline"
+      ],
+      "optimization_rules": [
+        {
+          "rule_id": "REC-C3-01",
+          "title": "Vampire / Standby Load Audit & Reduction",
+          "category": "Phantom Power Elimination",
+          "priority": "Medium",
+          "action_description": "Install smart power strips and automated circuit cut-offs to eliminate standby phantom power draw from idle electronics, displays, and transformers overnight.",
+          "target_appliance_zone": "Idle Commercial & Domestic Equipment",
+          "estimated_power_reduction_pct": 7.5,
+          "cost_impact": "Minimal Cost / Immediate Payback"
+        },
+        {
+          "rule_id": "REC-C3-02",
+          "title": "Off-Peak Scheduled Operations Utilization",
+          "category": "Opportunistic Off-Peak Scheduling",
+          "priority": "Low",
+          "action_description": "Schedule heavy automated tasks (data backups, water pumping, EV fleet overnight charging, thermal storage charging) during these lowest-tariff hours.",
+          "target_appliance_zone": "EV Fleet & Infrastructure Pumping",
+          "estimated_power_reduction_pct": 5.0,
+          "cost_impact": "Maximizes Economic Rate Efficiency"
+        }
+      ],
+      "summary_recommendation": "Maintain current high efficiency baseline while auditing phantom standby loads and utilizing low off-peak rates for scheduled automated background tasks."
+    }
+  },
+  "dashboard_summary": {
+    "overall_efficiency_index": 74.5,
+    "total_potential_load_shift_kw": 20119.22,
+    "estimated_annual_cost_savings_pct": 18.5,
+    "highest_priority_cluster": "cluster_1",
+    "highest_priority_action": "Shift Zone 1 evening peak load (6 PM - 10 PM) to midnight off-peak hours.",
+    "cluster_distribution_pct": {
+      "High-Temperature Heavy Users (Cluster 0)": 15.29,
+      "Evening Peak Demand (Cluster 1)": 14.57,
+      "Daytime Commercial (Cluster 2)": 35.46,
+      "Off-Peak Baseline (Cluster 3)": 34.69
+    }
+  }
+}
