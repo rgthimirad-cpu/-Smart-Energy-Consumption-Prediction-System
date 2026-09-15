@@ -58,3 +58,103 @@ PREDICTIONS_DIR = INTERNAL_DIR / "predictions"
 def ensure_output_dirs():
     for path in [MODELS_DIR, RESULTS_DIR, TUNING_DIR, PREDICTIONS_DIR]:
         path.mkdir(parents=True, exist_ok=True)
+
+
+def set_seeds():
+    np.random.seed(RANDOM_STATE)
+    tf.random.set_seed(RANDOM_STATE)
+
+
+def search_architectures(zone, data, architectures, max_epochs):
+    """
+    Train every candidate architecture on the training split and
+    evaluate each on the validation split.
+
+    Returns
+    -------
+    (pandas.DataFrame, dict)
+        A results table (one row per architecture) and a dict of
+        {architecture_name: best_epoch} for the winning epoch count
+        each candidate reached under early stopping.
+    """
+
+    target_column = data["target"]
+    input_shape = data["X_train"].shape[1:]
+
+    records = []
+    best_epochs = {}
+
+    for architecture in architectures:
+        print(f"\n[{zone}] Training candidate: {architecture['name']}")
+
+        set_seeds()
+        model = build_gru_model(architecture, input_shape)
+
+        early_stopping = keras.callbacks.EarlyStopping(
+            monitor="val_loss",
+            patience=EARLY_STOPPING_PATIENCE,
+            restore_best_weights=True
+        )
+
+        history = model.fit(
+            data["X_train"],
+            data["y_train"],
+            validation_data=(data["X_val"], data["y_val"]),
+            epochs=max_epochs,
+            batch_size=BATCH_SIZE,
+            callbacks=[early_stopping],
+            verbose=2
+        )
+
+        best_epoch = int(np.argmin(history.history["val_loss"])) + 1
+
+        val_pred_scaled = model.predict(data["X_val"], verbose=0).reshape(-1)
+        val_pred = inverse_transform_target(val_pred_scaled, target_column)
+        val_true = inverse_transform_target(data["y_val"], target_column)
+
+        metrics = calculate_metrics(val_true, val_pred)
+        latency_ms = measure_single_sample_latency(
+            model, data["X_val"], repeats=TIMING_REPEATS
+        )
+
+        records.append(
+            {
+                "Model": architecture["name"],
+                "Zone": target_column,
+                "RMSE": metrics["RMSE"],
+                "MAE": metrics["MAE"],
+                "MAPE": metrics["MAPE"],
+                "R2": metrics["R2"],
+                "Single_Sample_Latency_ms": latency_ms,
+                "Best_Epoch": best_epoch,
+                "Parameters": json.dumps(architecture)
+            }
+        )
+
+        best_epochs[architecture["name"]] = best_epoch
+
+        # Free memory before the next candidate.
+        keras.backend.clear_session()
+
+    return pd.DataFrame(records), best_epochs
+
+
+def select_best_architecture(results_df):
+    """
+    Pick the architecture with the lowest validation RMSE among those
+    whose single-sample latency is within LATENCY_TOLERANCE times the
+    fastest candidate's latency.
+
+    This keeps accuracy as the primary objective while ruling out
+    disproportionately slow candidates first - i.e. "maximise
+    accuracy while keeping response time low", made explicit and
+    auditable rather than left as an implicit trade-off.
+    """
+
+    fastest_latency = results_df["Single_Sample_Latency_ms"].min()
+    eligible = results_df[
+        results_df["Single_Sample_Latency_ms"] <= fastest_latency *
+        LATENCY_TOLERANCE
+    ]
+    best_row = eligible.sort_values("RMSE").iloc[0]
+    return best_row
