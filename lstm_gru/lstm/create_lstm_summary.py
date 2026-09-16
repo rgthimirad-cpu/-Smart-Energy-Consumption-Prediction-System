@@ -3,10 +3,9 @@ from pathlib import Path
 import pandas as pd
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
-RESULT_DIR = ROOT / "lstm_gru" / "results"
-
+RESULT_DIR = ROOT / "lstm_gru" / "lstm" / "results"
 
 def build_zone_summary(zone):
 

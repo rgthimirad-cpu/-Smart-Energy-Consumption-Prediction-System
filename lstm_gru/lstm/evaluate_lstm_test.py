@@ -14,10 +14,10 @@ from lstm_gru.evaluation import calculate_metrics
 # Project paths
 # ============================================================
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
-MODEL_DIR = ROOT / "lstm_gru" / "models"
-RESULT_DIR = ROOT / "lstm_gru" / "results"
+MODEL_DIR = ROOT / "lstm_gru" / "lstm" / "models"
+RESULT_DIR = ROOT / "lstm_gru" / "lstm" / "results"
 
 RESULT_DIR.mkdir(
     parents=True,

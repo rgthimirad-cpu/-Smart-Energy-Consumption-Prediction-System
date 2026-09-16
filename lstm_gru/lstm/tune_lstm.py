@@ -26,10 +26,10 @@ tf.random.set_seed(RANDOM_STATE)
 # Output paths
 # ============================================================
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
-MODEL_DIR = ROOT / "lstm_gru" / "models"
-RESULT_DIR = ROOT / "lstm_gru" / "results"
+MODEL_DIR = ROOT / "lstm_gru" / "lstm" / "models"
+RESULT_DIR = ROOT / "lstm_gru" / "lstm" / "results"
 
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 RESULT_DIR.mkdir(parents=True, exist_ok=True)

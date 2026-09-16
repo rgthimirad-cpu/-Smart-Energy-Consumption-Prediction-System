@@ -4,10 +4,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
-RESULT_DIR = ROOT / "lstm_gru" / "results"
-PLOT_DIR = ROOT / "lstm_gru" / "plots"
+RESULT_DIR = ROOT / "lstm_gru" / "lstm" / "results"
+PLOT_DIR = ROOT / "lstm_gru" / "lstm" / "plots"
 
 PLOT_DIR.mkdir(
     parents=True,

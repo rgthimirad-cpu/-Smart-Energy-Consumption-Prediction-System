@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 from lstm_gru.data_harness import prepare_zone_data
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 
@@ -35,6 +35,7 @@ def measure_response_time(
     model_path = (
     ROOT
     / "lstm_gru"
+    / "lstm"
     / "models"
     / f"{zone}_best_lstm.keras"
 )
@@ -117,6 +118,7 @@ def measure_response_time(
     result_path = (
         ROOT
         / "lstm_gru"
+        / "lstm"
         / "results"
         / f"{zone}_lstm_response_time.csv"
     )

@@ -8,10 +8,10 @@ from lstm_gru.scaling import inverse_transform_target
 from lstm_gru.evaluation import calculate_metrics
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
-MODEL_DIR = ROOT / "lstm_gru" / "models"
-RESULT_DIR = ROOT / "lstm_gru" / "results"
+MODEL_DIR = ROOT / "lstm_gru" / "lstm" / "models"
+RESULT_DIR = ROOT / "lstm_gru" / "lstm" / "results"
 
 
 def evaluate_baseline(zone="Zone_1"):
