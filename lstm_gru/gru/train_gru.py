@@ -48,8 +48,7 @@ from lstm_gru.gru.gru_config import (
 # Paths
 GRU_DIR = ROOT / "lstm_gru" / "gru"
 MODELS_DIR = GRU_DIR / "models"
-DOCS_DIR = GRU_DIR / "docs"
-RESULTS_DIR = DOCS_DIR / "results"
+RESULTS_DIR = GRU_DIR / "results"
 INTERNAL_DIR = GRU_DIR / "internal_results"
 TUNING_DIR = INTERNAL_DIR / "tuning"
 PREDICTIONS_DIR = INTERNAL_DIR / "predictions"
