@@ -1,0 +1,84 @@
+{
+  "sample_request": {
+    "timestamp": "2026-09-20 14:30:00",
+    "zone": "Zone 1",
+    "value_kw": 58900.0,
+    "rolling_24h_mean_kw": 32000.0,
+    "rolling_24h_std_kw": null,
+    "temperature_c": null
+  },
+  "sample_response_detect": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.064323",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.01
+    },
+    "is_anomaly": true,
+    "severity": "CRITICAL",
+    "isolation_forest_flag": true,
+    "statistical_zscore_flag": true,
+    "mad_zscore_flag": true,
+    "deviation_vs_baseline_kw": 26900.0,
+    "recommendation": "Immediate investigation required for major load deviation."
+  },
+  "sample_response_list": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.067834",
+      "update_mode": "on_demand",
+      "data_source": "cached_precomputed",
+      "model_version": "1.0.0",
+      "execution_time_ms": 3.5
+    },
+    "total_anomalies": 3,
+    "critical_count": 0,
+    "high_count": 3,
+    "medium_count": 0,
+    "low_count": 0,
+    "events": [
+      {
+        "event_id": "ANO-157233",
+        "timestamp": "2017-12-30 21:30:00",
+        "zone": "Zone_3",
+        "observed_value_kw": 16589.68,
+        "expected_baseline_kw": 15967.35,
+        "deviation_kw": 622.33,
+        "severity": "HIGH",
+        "isolation_forest_score": 0.024,
+        "zscore_24h": 1.7,
+        "mad_zscore": 4.37,
+        "signals_agreeing": 1,
+        "explanation": "Significant power anomaly in Zone_3 with MAD score 4.4"
+      },
+      {
+        "event_id": "ANO-157234",
+        "timestamp": "2017-12-30 21:40:00",
+        "zone": "Zone_3",
+        "observed_value_kw": 16485.95,
+        "expected_baseline_kw": 15909.72,
+        "deviation_kw": 576.23,
+        "severity": "HIGH",
+        "isolation_forest_score": 0.02,
+        "zscore_24h": 1.66,
+        "mad_zscore": 4.3,
+        "signals_agreeing": 1,
+        "explanation": "Significant power anomaly in Zone_3 with MAD score 4.3"
+      },
+      {
+        "event_id": "ANO-157235",
+        "timestamp": "2017-12-30 21:50:00",
+        "zone": "Zone_3",
+        "observed_value_kw": 16180.55,
+        "expected_baseline_kw": 15437.21,
+        "deviation_kw": 743.34,
+        "severity": "HIGH",
+        "isolation_forest_score": 0.024,
+        "zscore_24h": 1.55,
+        "mad_zscore": 4.09,
+        "signals_agreeing": 1,
+        "explanation": "Significant power anomaly in Zone_3 with MAD score 4.1"
+      }
+    ]
+  }
+}

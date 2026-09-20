@@ -1,0 +1,155 @@
+{
+  "sample_request": {
+    "zone_1_kw": 37000.0,
+    "zone_2_kw": 25000.0,
+    "zone_3_kw": 27000.0,
+    "temperature_c": 27.5,
+    "humidity_pct": 60.0,
+    "is_peak_hour": true
+  },
+  "sample_response_classify": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.068767",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.12
+    },
+    "assigned_cluster_id": 0,
+    "cluster_name": "High-Temperature Seasonal Heavy Consumers",
+    "short_code": "SUMMER_HVAC_HEAVY",
+    "efficiency_rating": "Grade C",
+    "ui_color_theme": "#EF4444",
+    "distance_to_centroid": 0.42,
+    "top_recommendation": "Optimize HVAC setpoints, pre-cool facilities before afternoon heat, and insulate Zone 3 thermal loads."
+  },
+  "sample_response_groups": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.068803",
+      "update_mode": "on_demand",
+      "data_source": "cached_precomputed",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.03
+    },
+    "total_records_analyzed": 52415,
+    "clusters_count": 4,
+    "clusters": [
+      {
+        "cluster_id": 0,
+        "cluster_name": "High-Temperature Seasonal Heavy Consumers",
+        "short_code": "SUMMER_HVAC_HEAVY",
+        "efficiency_rating": "Grade C",
+        "efficiency_level": "Low (Weather-Sensitive Heavy Load)",
+        "ui_color_theme": "#EF4444",
+        "usage_behavior": "High total electricity consumption across all zones, heavily driven by high ambient outdoor temperatures (avg 26.78\u00b0C). Elevated cooling demand in summer months, with Zone 3 showing disproportionately high power draw (27,295.85 kW).",
+        "dominant_time_window": "12:00 - 23:00 (Afternoon & Evening Thermal Demand)",
+        "environmental_trigger": "High Ambient Temperature (> 25\u00b0C)",
+        "sample_count": 8013,
+        "sample_percentage": 15.29,
+        "statistics": {
+          "total_power_mean_kw": 90529.63,
+          "zone_1_mean_kw": 37747.27,
+          "zone_2_mean_kw": 25486.51,
+          "zone_3_mean_kw": 27295.85,
+          "temperature_mean_c": 26.78,
+          "humidity_mean_pct": 59.04,
+          "peak_hour_percentage": 17.25,
+          "weekend_percentage": 28.7
+        },
+        "key_patterns": [
+          "Strong positive correlation between ambient outdoor temperature and energy draw",
+          "Zone 3 consumption is 68% higher than off-peak baseline due to cooling load",
+          "Concentrated in mid-summer months (June - August)",
+          "Significant afternoon and evening thermal inertia"
+        ]
+      },
+      {
+        "cluster_id": 1,
+        "cluster_name": "Evening Peak Demand Consumers",
+        "short_code": "EVENING_PEAK_CRITICAL",
+        "efficiency_rating": "Grade D",
+        "efficiency_level": "Critical (High Peak Load & Cost Risk)",
+        "ui_color_theme": "#DC2626",
+        "usage_behavior": "Highest overall power consumption (avg 91,450.99 kW) concentrated almost exclusively between 18:00 and 23:00 (93.10% peak hour occurrences). Zone 1 experiences maximum load (41,796.17 kW) during these evening peak tariff windows.",
+        "dominant_time_window": "18:00 - 23:00 (Evening Peak Hours)",
+        "environmental_trigger": "Peak Activity Window & Evening Utility Tariff Rates",
+        "sample_count": 7637,
+        "sample_percentage": 14.57,
+        "statistics": {
+          "total_power_mean_kw": 91450.99,
+          "zone_1_mean_kw": 41796.17,
+          "zone_2_mean_kw": 26878.31,
+          "zone_3_mean_kw": 22776.51,
+          "temperature_mean_c": 17.92,
+          "humidity_mean_pct": 69.11,
+          "peak_hour_percentage": 93.1,
+          "weekend_percentage": 27.85
+        },
+        "key_patterns": [
+          "99.2% of consumption records occur between 18:00 and 23:00",
+          "Highest total power draw (91.45 MW average) in the dataset",
+          "Zone 1 peak load reaches 41.8 MW (69% above off-peak baseline)",
+          "Direct coincidence with maximum Time-of-Use (TOU) billing rates"
+        ]
+      },
+      {
+        "cluster_id": 2,
+        "cluster_name": "Daytime Commercial & Active Residential Users",
+        "short_code": "DAYTIME_MODERATE",
+        "efficiency_rating": "Grade B",
+        "efficiency_level": "Moderate (Baseline Daytime Operations)",
+        "ui_color_theme": "#3B82F6",
+        "usage_behavior": "Moderate-to-high consumption (avg 71,609.43 kW) concentrated during daylight and business operational hours (06:00 - 17:00). Low peak evening exposure (1.30%), representing stable daytime activity.",
+        "dominant_time_window": "06:00 - 17:00 (Daytime Business Hours)",
+        "environmental_trigger": "Occupancy & Daytime Operational Hours",
+        "sample_count": 18584,
+        "sample_percentage": 35.46,
+        "statistics": {
+          "total_power_mean_kw": 71609.43,
+          "zone_1_mean_kw": 33569.61,
+          "zone_2_mean_kw": 21818.57,
+          "zone_3_mean_kw": 16221.25,
+          "temperature_mean_c": 19.18,
+          "humidity_mean_pct": 63.52,
+          "peak_hour_percentage": 1.3,
+          "weekend_percentage": 26.37
+        },
+        "key_patterns": [
+          "Largest cluster accounting for 35.46% of total historical time steps",
+          "78.8% of consumption occurs between 06:00 and 17:00",
+          "Very low peak evening exposure (1.30%)",
+          "Predictable, consistent daytime load profile"
+        ]
+      },
+      {
+        "cluster_id": 3,
+        "cluster_name": "Off-Peak Night Baseline Users",
+        "short_code": "OFF_PEAK_EFFICIENT",
+        "efficiency_rating": "Grade A",
+        "efficiency_level": "High (Base Load Efficiency)",
+        "ui_color_theme": "#10B981",
+        "usage_behavior": "Lowest overall power consumption (avg 53,538.88 kW), occurring predominantly during late night and early morning hours (00:00 - 11:00). Represents baseline, standby, and off-peak routine usage with 0% peak evening overlap.",
+        "dominant_time_window": "00:00 - 08:00 (Overnight Baseline)",
+        "environmental_trigger": "Minimum Human Activity & Cool Night Temperatures",
+        "sample_count": 18181,
+        "sample_percentage": 34.69,
+        "statistics": {
+          "total_power_mean_kw": 53538.88,
+          "zone_1_mean_kw": 24742.1,
+          "zone_2_mean_kw": 15839.43,
+          "zone_3_mean_kw": 12957.35,
+          "temperature_mean_c": 15.29,
+          "humidity_mean_pct": 76.81,
+          "peak_hour_percentage": 0.02,
+          "weekend_percentage": 31.06
+        },
+        "key_patterns": [
+          "Accounts for 34.69% of all dataset observations",
+          "99.4% of points fall between 00:00 and 11:00 AM",
+          "Lowest mean total power draw (53.54 MW average)",
+          "0.02% peak hour coincidence - ideal off-peak baseline"
+        ]
+      }
+    ]
+  }
+}

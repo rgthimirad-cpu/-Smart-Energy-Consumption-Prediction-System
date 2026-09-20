@@ -1,0 +1,147 @@
+{
+  "sample_request": {
+    "zone": "Total",
+    "horizon_steps": 6,
+    "temperature_c": 28.5,
+    "humidity_pct": null,
+    "wind_speed_ms": null
+  },
+  "sample_response_forecast_predict": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.060326",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 3122.68
+    },
+    "zone": "Total",
+    "total_records": 6,
+    "summary": {
+      "zone": "Total",
+      "mean_actual_kw": null,
+      "mean_predicted_kw": 37842.8,
+      "peak_predicted_kw": 39463.47,
+      "mae_kw": null,
+      "mape_pct": null
+    },
+    "series": [
+      {
+        "timestamp": "2026-09-20 22:10:00",
+        "actual_kw": null,
+        "predicted_kw": 38186.87,
+        "residual_kw": null,
+        "lower_bound_kw": 34444.55,
+        "upper_bound_kw": 41929.18
+      },
+      {
+        "timestamp": "2026-09-20 22:20:00",
+        "actual_kw": null,
+        "predicted_kw": 39463.47,
+        "residual_kw": null,
+        "lower_bound_kw": 35596.05,
+        "upper_bound_kw": 43330.89
+      },
+      {
+        "timestamp": "2026-09-20 22:30:00",
+        "actual_kw": null,
+        "predicted_kw": 38223.59,
+        "residual_kw": null,
+        "lower_bound_kw": 34477.68,
+        "upper_bound_kw": 41969.5
+      },
+      {
+        "timestamp": "2026-09-20 22:40:00",
+        "actual_kw": null,
+        "predicted_kw": 38692.63,
+        "residual_kw": null,
+        "lower_bound_kw": 34900.75,
+        "upper_bound_kw": 42484.5
+      },
+      {
+        "timestamp": "2026-09-20 22:50:00",
+        "actual_kw": null,
+        "predicted_kw": 37779.44,
+        "residual_kw": null,
+        "lower_bound_kw": 34077.06,
+        "upper_bound_kw": 41481.83
+      },
+      {
+        "timestamp": "2026-09-20 23:00:00",
+        "actual_kw": null,
+        "predicted_kw": 34710.83,
+        "residual_kw": null,
+        "lower_bound_kw": 31309.17,
+        "upper_bound_kw": 38112.49
+      }
+    ]
+  },
+  "sample_response_actual_vs_predicted": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.062991",
+      "update_mode": "on_demand",
+      "data_source": "cached_precomputed",
+      "model_version": "1.0.0",
+      "execution_time_ms": 2.5
+    },
+    "zone": "Total",
+    "total_records": 6,
+    "summary": {
+      "zone": "Total",
+      "mean_actual_kw": 72000.0,
+      "mean_predicted_kw": 72120.81,
+      "peak_predicted_kw": 73489.49,
+      "mae_kw": 685.41,
+      "mape_pct": 0.95
+    },
+    "series": [
+      {
+        "timestamp": "2017-12-30 23:00:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 71528.85,
+        "residual_kw": 471.15,
+        "lower_bound_kw": 65884.05,
+        "upper_bound_kw": 77173.65
+      },
+      {
+        "timestamp": "2017-12-30 23:10:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 72343.71,
+        "residual_kw": -343.71,
+        "lower_bound_kw": 66698.91,
+        "upper_bound_kw": 77988.51
+      },
+      {
+        "timestamp": "2017-12-30 23:20:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 71206.92,
+        "residual_kw": 793.08,
+        "lower_bound_kw": 65562.12,
+        "upper_bound_kw": 76851.72
+      },
+      {
+        "timestamp": "2017-12-30 23:30:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 72585.46,
+        "residual_kw": -585.46,
+        "lower_bound_kw": 66940.66,
+        "upper_bound_kw": 78230.26
+      },
+      {
+        "timestamp": "2017-12-30 23:40:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 71570.43,
+        "residual_kw": 429.57,
+        "lower_bound_kw": 65925.63,
+        "upper_bound_kw": 77215.23
+      },
+      {
+        "timestamp": "2017-12-30 23:50:00",
+        "actual_kw": 72000.0,
+        "predicted_kw": 73489.49,
+        "residual_kw": -1489.49,
+        "lower_bound_kw": 67844.69,
+        "upper_bound_kw": 79134.29
+      }
+    ]
+  }
+}
