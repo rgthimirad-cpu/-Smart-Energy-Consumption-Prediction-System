@@ -1,0 +1,172 @@
+{
+  "sample_request": {
+    "current_zone_1_kw": 38000.0,
+    "current_zone_2_kw": 26000.0,
+    "current_zone_3_kw": 28000.0,
+    "ambient_temp_c": 29.0,
+    "allow_load_shifting": true
+  },
+  "sample_response_action_plan": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.069105",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.01
+    },
+    "current_total_kw": 92000.0,
+    "optimized_target_kw": 79990.0,
+    "projected_power_reduction_kw": 12010.0,
+    "projected_bill_reduction_pct": 13.1,
+    "immediate_actions": [
+      "Raise HVAC thermostat setpoints by 1.5\u00b0C immediately to counter high ambient (29.0\u00b0C) thermal load.",
+      "De-energize non-essential office lighting and auxiliary pump circuits across Zone 1.",
+      "De-prioritize EV charging stations until off-peak night window (23:00).",
+      "Verify Zone 3 baseline transformer efficiency."
+    ],
+    "category_breakdown": [
+      {
+        "recommendation_id": "REC-HVAC-001",
+        "target_cluster_id": 0,
+        "target_cluster_name": "High-Temperature Seasonal Heavy Consumers",
+        "title": "HVAC Thermal Pre-Cooling & Dynamic Setpoint Control",
+        "category": "HVAC_OPTIMIZATION",
+        "priority": "CRITICAL",
+        "action_summary": "Optimize HVAC setpoints, pre-cool facilities before afternoon heat, and insulate Zone 3 thermal loads.",
+        "estimated_power_saving_kw": 5200.0,
+        "estimated_cost_saving_pct": 18.5,
+        "implementation_steps": [
+          "Raise cooling setpoints by 1.5\u00b0C during peak afternoon window (12:00-17:00)",
+          "Pre-cool building envelope during early morning off-peak tariff hours (04:00-08:00)",
+          "Inspect Zone 3 thermal insulation and seals on commercial chillers"
+        ]
+      },
+      {
+        "recommendation_id": "REC-LOAD-002",
+        "target_cluster_id": 1,
+        "target_cluster_name": "Evening Peak Heavy Consumers",
+        "title": "Residential & Commercial Load Shifting Strategy",
+        "category": "LOAD_SHIFTING",
+        "priority": "HIGH",
+        "action_summary": "Shift heavy appliances, dishwashers, and EV charging away from peak evening hours (6 PM - 10 PM) to off-peak night hours.",
+        "estimated_power_saving_kw": 3800.0,
+        "estimated_cost_saving_pct": 14.2,
+        "implementation_steps": [
+          "Schedule EV charging and heavy equipment for 23:00-06:00 window",
+          "Implement automated demand-response signaling for residential smart thermostats",
+          "Stagger commercial cooking equipment startup sequences"
+        ]
+      },
+      {
+        "recommendation_id": "REC-SOLAR-003",
+        "target_cluster_id": 2,
+        "target_cluster_name": "Daytime High Active Load",
+        "title": "Daytime Solar PV Array & Daylight Harvesting Integration",
+        "category": "SOLAR_INTEGRATION",
+        "priority": "HIGH",
+        "action_summary": "Deploy rooftop solar PV arrays and daylight harvesting during active daytime operating hours.",
+        "estimated_power_saving_kw": 4500.0,
+        "estimated_cost_saving_pct": 16.0,
+        "implementation_steps": [
+          "Install rooftop solar PV arrays matched to Zone 1 & 2 daytime demand profile",
+          "Integrate automated daylight dimming controls for commercial lighting",
+          "Align high-energy industrial batch processes with solar production peak (11:00-14:00)"
+        ]
+      },
+      {
+        "recommendation_id": "REC-VAMP-004",
+        "target_cluster_id": 3,
+        "target_cluster_name": "Off-Peak Baseline Consumers",
+        "title": "Nighttime Standby & Vampire Load Elimination",
+        "category": "VAMPIRE_LOAD_REDUCTION",
+        "priority": "MEDIUM",
+        "action_summary": "Audit nighttime standby vampire loads and maintain efficient off-peak baseline power usage.",
+        "estimated_power_saving_kw": 1900.0,
+        "estimated_cost_saving_pct": 8.5,
+        "implementation_steps": [
+          "Install smart power strips to auto-cutoff non-essential office peripherals overnight",
+          "Audit Zone 1 transformer idle losses and standby lighting power",
+          "Schedule main server room auxiliary cooling cycling during low ambient night hours"
+        ]
+      }
+    ]
+  },
+  "sample_response_recommendations": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.069118",
+      "update_mode": "on_demand",
+      "data_source": "cached_precomputed",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.01
+    },
+    "total_recommendations": 4,
+    "total_potential_power_saving_kw": 15400.0,
+    "max_cost_saving_pct": 18.5,
+    "recommendations": [
+      {
+        "recommendation_id": "REC-HVAC-001",
+        "target_cluster_id": 0,
+        "target_cluster_name": "High-Temperature Seasonal Heavy Consumers",
+        "title": "HVAC Thermal Pre-Cooling & Dynamic Setpoint Control",
+        "category": "HVAC_OPTIMIZATION",
+        "priority": "CRITICAL",
+        "action_summary": "Optimize HVAC setpoints, pre-cool facilities before afternoon heat, and insulate Zone 3 thermal loads.",
+        "estimated_power_saving_kw": 5200.0,
+        "estimated_cost_saving_pct": 18.5,
+        "implementation_steps": [
+          "Raise cooling setpoints by 1.5\u00b0C during peak afternoon window (12:00-17:00)",
+          "Pre-cool building envelope during early morning off-peak tariff hours (04:00-08:00)",
+          "Inspect Zone 3 thermal insulation and seals on commercial chillers"
+        ]
+      },
+      {
+        "recommendation_id": "REC-LOAD-002",
+        "target_cluster_id": 1,
+        "target_cluster_name": "Evening Peak Heavy Consumers",
+        "title": "Residential & Commercial Load Shifting Strategy",
+        "category": "LOAD_SHIFTING",
+        "priority": "HIGH",
+        "action_summary": "Shift heavy appliances, dishwashers, and EV charging away from peak evening hours (6 PM - 10 PM) to off-peak night hours.",
+        "estimated_power_saving_kw": 3800.0,
+        "estimated_cost_saving_pct": 14.2,
+        "implementation_steps": [
+          "Schedule EV charging and heavy equipment for 23:00-06:00 window",
+          "Implement automated demand-response signaling for residential smart thermostats",
+          "Stagger commercial cooking equipment startup sequences"
+        ]
+      },
+      {
+        "recommendation_id": "REC-SOLAR-003",
+        "target_cluster_id": 2,
+        "target_cluster_name": "Daytime High Active Load",
+        "title": "Daytime Solar PV Array & Daylight Harvesting Integration",
+        "category": "SOLAR_INTEGRATION",
+        "priority": "HIGH",
+        "action_summary": "Deploy rooftop solar PV arrays and daylight harvesting during active daytime operating hours.",
+        "estimated_power_saving_kw": 4500.0,
+        "estimated_cost_saving_pct": 16.0,
+        "implementation_steps": [
+          "Install rooftop solar PV arrays matched to Zone 1 & 2 daytime demand profile",
+          "Integrate automated daylight dimming controls for commercial lighting",
+          "Align high-energy industrial batch processes with solar production peak (11:00-14:00)"
+        ]
+      },
+      {
+        "recommendation_id": "REC-VAMP-004",
+        "target_cluster_id": 3,
+        "target_cluster_name": "Off-Peak Baseline Consumers",
+        "title": "Nighttime Standby & Vampire Load Elimination",
+        "category": "VAMPIRE_LOAD_REDUCTION",
+        "priority": "MEDIUM",
+        "action_summary": "Audit nighttime standby vampire loads and maintain efficient off-peak baseline power usage.",
+        "estimated_power_saving_kw": 1900.0,
+        "estimated_cost_saving_pct": 8.5,
+        "implementation_steps": [
+          "Install smart power strips to auto-cutoff non-essential office peripherals overnight",
+          "Audit Zone 1 transformer idle losses and standby lighting power",
+          "Schedule main server room auxiliary cooling cycling during low ambient night hours"
+        ]
+      }
+    ]
+  }
+}

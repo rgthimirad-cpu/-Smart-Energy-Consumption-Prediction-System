@@ -1,0 +1,71 @@
+{
+  "sample_request": {
+    "timestamp": "2026-09-20 14:00:00",
+    "total_power_kw": 88500.0,
+    "lag_10m_kw": null,
+    "lag_1h_kw": null,
+    "rolling_24h_mean_kw": null,
+    "temperature_c": 32.5,
+    "is_weekend": false
+  },
+  "sample_response_predict": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.068306",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.01
+    },
+    "timestamp": "2026-09-20 14:00:00",
+    "predicted_total_kw": 95081.37,
+    "peak_probability": 0.73,
+    "is_peak_warning": true,
+    "threshold_kw": 90000.0,
+    "risk_level": "HIGH",
+    "advisory_message": "HIGH: Demand approaching peak threshold. Notify facility managers to prep HVAC load shedding."
+  },
+  "sample_response_upcoming": {
+    "meta": {
+      "timestamp": "2026-09-20T16:32:43.068453",
+      "update_mode": "on_demand",
+      "data_source": "live_model_inference",
+      "model_version": "1.0.0",
+      "execution_time_ms": 0.14
+    },
+    "hours_evaluated": 24,
+    "threshold_kw": 90000.0,
+    "peaks_detected_count": 2,
+    "highest_probability": 0.92,
+    "upcoming_windows": [
+      {
+        "window_id": "PEAK-WIN-01",
+        "start_time": "2026-09-21 02:00:00",
+        "end_time": "2026-09-21 05:30:00",
+        "duration_minutes": 210,
+        "peak_probability": 0.92,
+        "expected_peak_kw": 97400.0,
+        "threshold_kw": 90000.0,
+        "risk_level": "CRITICAL",
+        "contributing_factors": [
+          "High ambient temperature (> 30\u00b0C)",
+          "Zone 1 & 3 simultaneous HVAC cooling load",
+          "Weekday commercial peak hours"
+        ]
+      },
+      {
+        "window_id": "PEAK-WIN-02",
+        "start_time": "2026-09-21 07:30:00",
+        "end_time": "2026-09-21 09:30:00",
+        "duration_minutes": 120,
+        "peak_probability": 0.74,
+        "expected_peak_kw": 92100.0,
+        "threshold_kw": 90000.0,
+        "risk_level": "HIGH",
+        "contributing_factors": [
+          "Evening appliance and lighting ramp",
+          "Zone 2 residential concentration"
+        ]
+      }
+    ]
+  }
+}
