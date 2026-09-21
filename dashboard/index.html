@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── SEO ─────────────────────────────────────── -->
+  <title>EnergyIQ — Smart Energy Consumption Dashboard</title>
+  <meta name="description"
+        content="Real-time energy consumption forecasting, anomaly detection, peak demand alerts, and optimization recommendations for smart grid operators." />
+  <meta name="theme-color" content="#080e1a" />
+
+  <!-- ── Favicon (emoji) ──────────────────────────── -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+  <!-- ── Design System CSS ────────────────────────── -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- ── Chart.js (CDN) — Members 2 & 3 use this ── -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <!-- Chart.js date adapter for time-series axes -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ──────────────────────────────────────────────
+       SIDEBAR
+  ─────────────────────────────────────────────── -->
+  <aside id="sidebar" role="navigation" aria-label="Dashboard navigation">
+
+    <!-- Brand -->
+    <div id="sidebar-brand">
+      <div class="brand-icon" aria-hidden="true">⚡</div>
+      <div class="brand-text">
+        <div class="brand-name">EnergyIQ</div>
+        <div class="brand-tagline">Smart Grid Dashboard</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="sidebar-nav">
+
+      <div class="nav-section-label">Overview</div>
+
+      <div
+        class="nav-item active"
+        id="nav-forecasting"
+        data-section="forecasting"
+        role="button"
+        tabindex="0"
+        aria-label="Navigate to Forecasting section"
+        aria-current="page">
+        <span class="nav-item-icon" aria-hidden="true">📈</span>
+        <span class="nav-item-text">Forecasting</span>
+      </div>
+
+      <div
+        class="nav-item"
+        id="nav-anomalies"
+        data-section="anomalies"
+        role="button"
+        tabindex="0"
+        aria-label="Navigate to Anomalies and Peak Demand section">
+        <span class="nav-item-icon" aria-hidden="true">⚡</span>
+        <span class="nav-item-text">Anomalies &amp; Peaks</span>
+        <span class="nav-badge" id="anomaly-count-badge" aria-label="Active anomalies" style="display:none">0</span>
+      </div>
+
+      <div class="nav-section-label">Insights</div>
+
+      <div
+        class="nav-item"
+        id="nav-clustering"
+        data-section="clustering"
+        role="button"
+        tabindex="0"
+        aria-label="Navigate to Clustering and Recommendations section">
+        <span class="nav-item-icon" aria-hidden="true">🔬</span>
+        <span class="nav-item-text">Clusters &amp; Recs</span>
+      </div>
+
+      <div class="nav-section-label">System</div>
+
+      <div class="nav-section-label" style="padding-top:0; font-size: var(--text-xs); color: var(--color-text-muted); font-weight:400; text-transform:none; letter-spacing:0; padding-left: var(--space-5);">
+        <a href="http://localhost:8000/docs" target="_blank" rel="noopener" style="color:var(--color-text-muted); font-size: var(--text-xs);">🔗 API Docs ↗</a>
+      </div>
+
+    </nav>
+
+    <!-- Sidebar Footer — Model versions -->
+    <div id="sidebar-footer">
+      <div style="font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.8;">
+        <div>🤖 <span style="color:var(--color-text-secondary);">ML Models</span></div>
+        <div id="model-status-list" style="padding-left: 4px; margin-top: 4px;">
+          <div class="skeleton" style="height:12px; margin-bottom:4px; border-radius:4px; width:80%;"></div>
+          <div class="skeleton" style="height:12px; margin-bottom:4px; border-radius:4px; width:60%;"></div>
+          <div class="skeleton" style="height:12px; border-radius:4px; width:70%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ──────────────────────────────────────────────
+       HEADER
+  ─────────────────────────────────────────────── -->
+  <header id="header" role="banner">
+
+    <div id="header-left">
+      <div>
+        <h1 id="section-heading" style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text-primary);">
+          📈&nbsp;&nbsp;Forecasting
+        </h1>
+        <div id="header-subtitle" style="font-size: var(--text-xs); color: var(--color-text-muted);">
+          Smart Energy Consumption Prediction System
+        </div>
+      </div>
+    </div>
+
+    <div id="header-right">
+
+      <!-- Last updated timestamp -->
+      <span id="last-refresh" class="refresh-text" aria-live="polite">—</span>
+
+      <!-- Refresh Button -->
+      <button
+        id="btn-refresh"
+        class="btn btn-secondary btn-sm"
+        aria-label="Trigger model refresh"
+        title="Force refresh all model outputs">
+        ⟳&nbsp;&nbsp;Refresh
+      </button>
+
+      <!-- System Status Pill -->
+      <div
+        id="status-pill"
+        class="status-pill loading"
+        role="status"
+        aria-live="polite"
+        aria-label="API connection status">
+        <span id="status-dot" class="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Connecting…</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ──────────────────────────────────────────────
+       MAIN CONTENT
+  ─────────────────────────────────────────────── -->
+  <main id="main-content" role="main">
+
+    <!-- ══════════════════════════════════════════
+         SECTION 1 — FORECASTING
+         Member 2 fills the content inside here
+    ══════════════════════════════════════════ -->
+    <section
+      id="section-forecasting"
+      class="dashboard-section active"
+      aria-labelledby="heading-forecasting">
+
+      <div class="section-header">
+        <h2 class="section-title" id="heading-forecasting">
+          <span class="section-icon" aria-hidden="true">📈</span>
+          Energy Forecasting
+        </h2>
+        <p class="section-description">
+          Historical actual vs. ML-predicted energy consumption, plus forward multi-step forecasts with 95% confidence bounds.
+        </p>
+      </div>
+
+      <!-- ── KPI Cards placeholder ──────────────── -->
+      <div id="forecasting-kpis" class="kpi-grid">
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+      </div>
+
+      <!-- ── Main Chart placeholder ──────────────── -->
+      <div id="forecasting-chart-container" class="chart-card">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+          <span>Loading forecast data…</span>
+        </div>
+      </div>
+
+      <!-- ── Predict form placeholder ─────────────── -->
+      <div id="forecasting-predict-container"></div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 2 — ANOMALIES & PEAK DEMAND
+         Member 2 fills the content inside here
+    ══════════════════════════════════════════ -->
+    <section
+      id="section-anomalies"
+      class="dashboard-section"
+      aria-labelledby="heading-anomalies">
+
+      <div class="section-header">
+        <h2 class="section-title" id="heading-anomalies">
+          <span class="section-icon" aria-hidden="true">⚡</span>
+          Anomalies &amp; Peak Demand
+        </h2>
+        <p class="section-description">
+          Real-time anomaly detection events flagged by multi-algorithm consensus, plus upcoming predicted peak demand windows and risk alerts.
+        </p>
+      </div>
+
+      <!-- ── Anomaly KPI row placeholder ──────────── -->
+      <div id="anomalies-kpis" class="kpi-grid">
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+      </div>
+
+      <!-- ── Anomaly chart + feed ──────────────────── -->
+      <div class="content-grid">
+        <div id="anomaly-chart-container" class="chart-card col-8">
+          <div class="loader-overlay">
+            <div class="spinner"></div>
+            <span>Loading anomaly data…</span>
+          </div>
+        </div>
+        <div id="anomaly-feed-container" class="card col-4">
+          <div class="loader-overlay">
+            <div class="spinner"></div>
+            <span>Loading events…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Peak Demand Alerts ────────────────────── -->
+      <div id="peak-demand-container" class="card mt-6">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+          <span>Loading peak demand data…</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 3 — CLUSTERING & RECOMMENDATIONS
+         Member 3 fills the content inside here
+    ══════════════════════════════════════════ -->
+    <section
+      id="section-clustering"
+      class="dashboard-section"
+      aria-labelledby="heading-clustering">
+
+      <div class="section-header">
+        <h2 class="section-title" id="heading-clustering">
+          <span class="section-icon" aria-hidden="true">🔬</span>
+          Clustering &amp; Recommendations
+        </h2>
+        <p class="section-description">
+          K-Means consumer segmentation, cluster scatter plots, and AI-generated energy optimization recommendations with estimated savings.
+        </p>
+      </div>
+
+      <!-- ── Savings KPI bar placeholder ──────────── -->
+      <div id="savings-kpis" class="kpi-grid">
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+      </div>
+
+      <!-- ── Scatter plot + cluster cards ─────────── -->
+      <div class="content-grid">
+        <div id="cluster-chart-container" class="chart-card col-7">
+          <div class="loader-overlay">
+            <div class="spinner"></div>
+            <span>Loading cluster data…</span>
+          </div>
+        </div>
+        <div id="cluster-classify-container" class="card col-5">
+          <div class="loader-overlay">
+            <div class="spinner"></div>
+            <span>Loading classifier…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Cluster summary cards ─────────────────── -->
+      <div id="cluster-cards-container" class="mt-6">
+        <div class="content-grid">
+          <div class="card col-3 skeleton" style="height:160px;"></div>
+          <div class="card col-3 skeleton" style="height:160px;"></div>
+          <div class="card col-3 skeleton" style="height:160px;"></div>
+          <div class="card col-3 skeleton" style="height:160px;"></div>
+        </div>
+      </div>
+
+      <!-- ── Recommendations ───────────────────────── -->
+      <div id="recommendations-container" class="mt-6">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+          <span>Loading recommendations…</span>
+        </div>
+      </div>
+
+      <!-- ── Action Plan ────────────────────────────── -->
+      <div id="action-plan-container" class="card mt-6">
+        <div class="loader-overlay">
+          <div class="spinner"></div>
+          <span>Loading action plan…</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main><!-- /#main-content -->
+
+</div><!-- /#app -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS  (type="module" for ES module imports)
+════════════════════════════════════════════════════════════ -->
+
+<!-- Member 1: Core app controller -->
+<script type="module" src="js/app.js"></script>
+
+<!-- Member 2: Forecasting & Anomaly/Peak charts -->
+<script type="module" src="js/forecasting.js"></script>
+<script type="module" src="js/anomalies.js"></script>
+
+<!-- Member 3: Clustering & Recommendations -->
+<script type="module" src="js/clustering.js"></script>
+<script type="module" src="js/recommendations.js"></script>
+
+<!-- Inline: Keyboard nav for sidebar items -->
+<script>
+  document.querySelectorAll('.nav-item[data-section]').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+<!-- Inline: Populate model status list from api:status event -->
+<script type="module">
+  import { fetchSystemStatus } from './js/api.js';
+
+  window.addEventListener('api:status', e => {
+    const { online, detail } = e.detail;
+    const list = document.getElementById('model-status-list');
+    const badge = document.getElementById('anomaly-count-badge');
+    if (!list || !online || !detail?.models) return;
+
+    const entries = Object.values(detail.models);
+    list.innerHTML = entries.map(m => {
+      const dot = m.is_loaded
+        ? '<span style="color:var(--color-success)">●</span>'
+        : '<span style="color:var(--color-danger)">●</span>';
+      return `<div style="font-size:10px; color:var(--color-text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+        ${dot} ${m.name}
+      </div>`;
+    }).join('');
+  });
+</script>
+
+</body>
+</html>
