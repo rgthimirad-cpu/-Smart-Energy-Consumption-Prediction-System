@@ -39,9 +39,14 @@ const SECTION_META = {
     desc:  "Anomaly detection events and upcoming peak demand alerts",
   },
   clustering: {
-    label: "Clustering & Recommendations",
+    label: "Clustering",
     icon:  "🔬",
-    desc:  "Consumer cluster profiles and energy optimization recommendations",
+    desc:  "Consumer cluster profiles and segmentation analytics",
+  },
+  recommendations: {
+    label: "Recommendations",
+    icon:  "💡",
+    desc:  "Energy optimization recommendations and action plans",
   },
 };
 
