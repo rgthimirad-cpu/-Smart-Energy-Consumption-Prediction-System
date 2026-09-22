@@ -80,9 +80,20 @@
         data-section="clustering"
         role="button"
         tabindex="0"
-        aria-label="Navigate to Clustering and Recommendations section">
+        aria-label="Navigate to Clustering section">
         <span class="nav-item-icon" aria-hidden="true">🔬</span>
-        <span class="nav-item-text">Clusters &amp; Recs</span>
+        <span class="nav-item-text">Clusters</span>
+      </div>
+
+      <div
+        class="nav-item"
+        id="nav-recommendations"
+        data-section="recommendations"
+        role="button"
+        tabindex="0"
+        aria-label="Navigate to Recommendations section">
+        <span class="nav-item-icon" aria-hidden="true">💡</span>
+        <span class="nav-item-text">Recommendations</span>
       </div>
 
       <div class="nav-section-label">System</div>
@@ -261,15 +272,15 @@
       <div class="section-header">
         <h2 class="section-title" id="heading-clustering">
           <span class="section-icon" aria-hidden="true">🔬</span>
-          Clustering &amp; Recommendations
+          Clustering
         </h2>
         <p class="section-description">
-          K-Means consumer segmentation, cluster scatter plots, and AI-generated energy optimization recommendations with estimated savings.
+          K-Means consumer segmentation, cluster scatter plots, and consumer profile breakdowns.
         </p>
       </div>
 
       <!-- ── Savings KPI bar placeholder ──────────── -->
-      <div id="savings-kpis" class="kpi-grid">
+      <div id="cluster-savings-placeholder" class="kpi-grid" style="display:none">
         <div class="kpi-card skeleton" style="height:110px;"></div>
         <div class="kpi-card skeleton" style="height:110px;"></div>
         <div class="kpi-card skeleton" style="height:110px;"></div>
@@ -302,6 +313,29 @@
       </div>
 
       <!-- ── Recommendations ───────────────────────── -->
+    </section>
+
+    <section
+      id="section-recommendations"
+      class="dashboard-section"
+      aria-labelledby="heading-recommendations">
+
+      <div class="section-header">
+        <h2 class="section-title" id="heading-recommendations">
+          <span class="section-icon" aria-hidden="true">💡</span>
+          Recommendations
+        </h2>
+        <p class="section-description">
+          Energy optimization recommendations, estimated savings, and operator action plans.
+        </p>
+      </div>
+
+      <div id="savings-kpis" class="kpi-grid">
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+        <div class="kpi-card skeleton" style="height:110px;"></div>
+      </div>
+
       <div id="recommendations-container" class="mt-6">
         <div class="loader-overlay">
           <div class="spinner"></div>
