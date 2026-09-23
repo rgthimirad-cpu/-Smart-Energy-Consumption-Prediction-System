@@ -1,10 +1,10 @@
-# ⚡ Smart Energy Consumption Prediction System
+# Smart Energy Consumption Prediction System
 
 A full-stack machine learning system for real-time energy consumption **forecasting**, **anomaly detection**, **peak demand prediction**, **consumer clustering**, and **optimization recommendations** — powered by a FastAPI backend and a live interactive dashboard.
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 Smart-Energy-Consumption-Prediction-System/
@@ -64,9 +64,9 @@ Smart-Energy-Consumption-Prediction-System/
 
 ---
 
-## 🧠 System Overview
+## System Overview
 
-### 1. 📊 Data Engineering & Preprocessing
+### 1. Data Engineering & Preprocessing
 
 **Dataset:** Tetuan City power consumption (Tetouan, Morocco) — 52,416 rows of 10-minute interval smart meter readings across three distribution zones, with weather features (Temperature, Humidity, Wind Speed, Diffuse Flow).
 
@@ -86,13 +86,13 @@ ML models trained to predict energy consumption across zones. Outputs used by th
 
 ---
 
-### 3. ⚡ Anomaly Detection
+### 3. Anomaly Detection
 
 Multi-algorithm consensus using **Isolation Forest**, **3-sigma Z-score**, and **MAD robust Z-score**. Flags unusual consumption events with severity ratings: `NORMAL` → `LOW` → `MEDIUM` → `HIGH` → `CRITICAL`.
 
 ---
 
-### 4. 🔺 Peak Demand Prediction
+### 4. Peak Demand Prediction
 
 Predicts whether total demand in the next 10-minute interval will exceed the 90th-percentile peak threshold.
 
@@ -109,26 +109,26 @@ Predicts whether total demand in the next 10-minute interval will exceed the 90t
 
 ---
 
-### 5. 🔬 Clustering & Recommendations
+### 5. Clustering & Recommendations
 
 K-Means consumer segmentation into 4 cluster profiles, each with efficiency ratings, usage behavior summaries, and targeted energy optimization recommendations with estimated kW and cost savings.
 
 ---
 
-### 6. 🖥️ Dashboard (EnergyIQ)
+### 6. Dashboard (EnergyIQ)
 
 A styled, dark-themed single-page dashboard that connects to the live API and displays outputs from every model team.
 
 **Sections:**
 | Section | Visuals |
 |---|---|
-| 📈 Forecasting | Actual vs Predicted dual-line chart, confidence bounds, KPI cards, forward forecast form |
-| ⚡ Anomalies & Peaks | Anomaly time-series with marker overlays, event feed, peak demand alert cards |
-| 🔬 Clusters & Recs | Cluster scatter plot, segment cards, "Classify My Meter" form, recommendation cards, action plan timeline |
+| Forecasting | Actual vs Predicted dual-line chart, confidence bounds, KPI cards, forward forecast form |
+| Anomalies & Peaks | Anomaly time-series with marker overlays, event feed, peak demand alert cards |
+| Clusters & Recs | Cluster scatter plot, segment cards, "Classify My Meter" form, recommendation cards, action plan timeline |
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### Step 1 — Install dependencies
 
@@ -155,7 +155,7 @@ Open **http://localhost:3000** in your browser.
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -177,7 +177,7 @@ Open **http://localhost:3000** in your browser.
 
 ---
 
-## 📦 Key Deliverables
+## Key Deliverables
 
 | File / Folder | Description |
 |---|---|
@@ -190,7 +190,7 @@ Open **http://localhost:3000** in your browser.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
