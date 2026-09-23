@@ -80,7 +80,7 @@ The notebook `notebooks/data_preprocessing.ipynb` runs five stages:
 
 ---
 
-### 2. 📈 Forecasting (Regression & LSTM/GRU)
+### 2. Forecasting (Regression & LSTM/GRU)
 
 ML models trained to predict energy consumption across zones. Outputs used by the dashboard's Forecasting section.
 
